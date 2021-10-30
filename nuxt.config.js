@@ -3,8 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - realtime-feed',
-    title: 'realtime-feed',
+    title: 'Realtime Feed',
     htmlAttrs: {
       lang: 'en'
     },
