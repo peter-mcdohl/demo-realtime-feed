@@ -43,6 +43,11 @@ app.post('/feed', (req, res) => {
   res.status(200).json({ message: 'OK' })
 })
 
+app.delete('/feed', (req, res) => {
+  feedList.splice(0, feedList.length)
+  res.status(200).json({ message: 'OK' })
+})
+
 const pageSize = 5
 
 app.get('/feed/short/:lastIndex', (req, res) => {
