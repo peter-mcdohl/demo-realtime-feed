@@ -37,7 +37,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/feed', (req, res) => {
-  publisher.publish(channelName, JSON.stringify(req.body))
+  const data = req.body
+  data.createdAt = Date.now()
+  publisher.publish(channelName, JSON.stringify(data))
   res.status(200).json({ message: 'OK' })
 })
 
