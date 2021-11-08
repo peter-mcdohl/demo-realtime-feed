@@ -84,6 +84,11 @@ function sleep (ms) {
 }
 
 const longPolling = async (req, res) => {
+  let isClosed = false
+  req.on('close', () => {
+    isClosed = true
+  })
+
   let lastIndex = parseFloat(req.params.lastIndex)
   if (isNaN(lastIndex)) {
     lastIndex = -1
@@ -93,6 +98,9 @@ const longPolling = async (req, res) => {
   let startIndex = -pageSize
   let count = 0
   while (result.length === 0) {
+    if (isClosed) {
+      break
+    }
     console.log('Attempt:', count)
     if (count > 0) {
       await sleep(1000)
