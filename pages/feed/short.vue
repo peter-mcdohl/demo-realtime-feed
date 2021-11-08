@@ -3,23 +3,7 @@
     <v-col cols="12" sm="8" md="6">
       <h1>Feed with Short Polling</h1>
 
-      <v-card
-        class="mx-auto"
-        tile
-      >
-        <v-list-item
-          v-for="(item, idx) in feeds"
-          :key="idx"
-          three-line
-        >
-          <v-list-item-content>
-            <v-list-item-title>{{ item.username }} - {{ item.createdAt }}</v-list-item-title>
-            <v-list-item-subtitle>
-              {{ item.message }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-card>
+      <FeedList :feeds="feeds" />
     </v-col>
   </v-row>
 </template>
