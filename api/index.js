@@ -1,6 +1,34 @@
+const http = require('http')
+const WebSocket = require('ws')
+
 const express = require('express')
 const app = express()
 app.use(express.json())
+
+const server = http.createServer(app)
+const websocketServer = new WebSocket.Server({ server })
+
+websocketServer.on('connection', (webSocketClient) => {
+  const subscriberWS = redis.createClient()
+
+  subscriberWS.on('message', (channel, message) => {
+    webSocketClient.send(message)
+  })
+
+  subscriberWS.on('error', (message) => {
+    console.log('SUBSCRIBER WS ERR:' + message)
+  })
+
+  subscriberWS.on('close', () => {
+    subscriberWS.end()
+  })
+
+  subscriberWS.subscribe(channelName)
+})
+
+server.listen(3001, () => {
+  console.log('Websocket server started on port 3001')
+})
 
 const redis = require('redis')
 const subscriber = redis.createClient()
