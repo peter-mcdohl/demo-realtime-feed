@@ -37,11 +37,7 @@ export default {
         }
       })
       .catch((err) => {
-        if (err.message && err.message.includes('timeout')) {
-          this.fetchFeeds()
-        } else {
-          console.log(err)
-        }
+        console.log(err)
       })
   },
   beforeDestroy () {
