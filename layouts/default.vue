@@ -77,7 +77,7 @@ export default {
         },
         {
           icon: 'mdi-post',
-          title: 'SSE',
+          title: 'Feed - SSE',
           to: '/feed/sse'
         }
       ],
