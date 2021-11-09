@@ -150,6 +150,35 @@ const longPolling = async (req, res) => {
 
 app.get('/feed/long/:lastIndex', longPolling)
 
+app.get('/feed/sse', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache')
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Connection', 'keep-alive')
+  res.flushHeaders()
+
+  const subscriberSSE = redis.createClient()
+
+  subscriberSSE.on('message', (channel, message) => {
+    res.write(`data: ${message}\n\n`)
+  })
+
+  subscriberSSE.on('error', (message) => {
+    console.log('SUBSCRIBER SSE ERR:' + message)
+  })
+
+  subscriberSSE.on('close', () => {
+    console.log('subscriber SSE closed')
+    subscriberSSE.end()
+  })
+
+  subscriberSSE.subscribe(channelName)
+
+  res.on('close', () => {
+    subscriberSSE.end(true)
+    res.end()
+  })
+})
+
 module.exports = {
   path: '/api',
   handler: app
